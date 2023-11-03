@@ -17,7 +17,7 @@ public class ProductOptionRequestDto {
     private String optionTitle;
     private String optionImgUrl;
 
-    public ProductOption from(Product product){
+    public ProductOption toEntity(Product product){
         return ProductOption.builder()
                 .product(product)
                 .price(price)
