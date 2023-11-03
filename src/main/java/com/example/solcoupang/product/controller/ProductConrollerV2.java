@@ -30,8 +30,7 @@ public class ProductConrollerV2 {
         Seller seller = sellerRequestDto.toEntity();
         Seller savedSeller = sellerRepository.save(seller);
         log.info("엔티티 dto 정보 id : " + savedSeller.getSellerId()+" name : "+savedSeller.getSellerName());
-        SellerDto sellerDto = new SellerDto();
-        sellerDto.fromEntity(savedSeller);
+        SellerDto sellerDto = new SellerDto(seller);
         log.info("출력 dto 정보 id : "+sellerDto.getSellerId() + " name : "+sellerDto.getSellerName());
         return sellerDto;
     }
@@ -41,14 +40,13 @@ public class ProductConrollerV2 {
 
     @PostMapping("/product")
     public ProductDto postSeller(@RequestBody ProductRequestDto productRequestDto){
-        log.info("입력 dto 정보 : "+productRequestDto.getProductName());
+        //log.info("입력 dto 정보 : "+productRequestDto.getProductName());
         Seller seller = sellerRepository.findBySellerId(productRequestDto.getSellerId());
         Product product = productRequestDto.toEntity(seller);
         Product savedProduct = productRepository.save(product);
-        log.info("엔티티 dto 정보 id : " + savedProduct.getProductId() +" productName : "+savedProduct.getProductName());
-        ProductDto productDto = new ProductDto();
-        productDto.fromEntity(savedProduct);
-        log.info("출력 dto 정보 id : "+productDto.getSellerId() + " sellerId : "+productDto.getSellerId() + " productName : "+productDto.getProductName());
+        //log.info("엔티티 dto 정보 id : " + savedProduct.getProductId() +" productName : "+savedProduct.getProductName());
+        ProductDto productDto = ProductDto.fromEntity(savedProduct);
+        //log.info("출력 dto 정보 id : "+productDto.getSellerId() + " sellerId : "+productDto.getSellerId() + " productName : "+productDto.getProductName());
         return productDto;
     }
 

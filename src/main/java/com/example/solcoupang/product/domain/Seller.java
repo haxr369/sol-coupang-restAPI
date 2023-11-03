@@ -11,7 +11,7 @@ import lombok.*;
 public class Seller {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long sellerId;
 
     @Column

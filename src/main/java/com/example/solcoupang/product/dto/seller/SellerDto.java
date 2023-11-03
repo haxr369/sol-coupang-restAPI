@@ -17,12 +17,11 @@ public class SellerDto {
     private String sellerPhoneNumber;
     private String sellerAddress;
 
-    public SellerDto fromEntity(Seller seller){
-        return SellerDto.builder()
-                .sellerId(seller.getSellerId())
-                .sellerName(seller.getSellerName())
-                .sellerPhoneNumber(seller.getSellerPhoneNumber())
-                .sellerAddress(seller.getSellerAddress())
-                .build();
+    // 커스텀 생성자
+    public SellerDto(Seller seller){
+        this.sellerId = seller.getSellerId();
+        this.sellerName = seller.getSellerName();
+        this.sellerPhoneNumber = seller.getSellerPhoneNumber();
+        this.sellerAddress = seller.getSellerAddress();
     }
 }

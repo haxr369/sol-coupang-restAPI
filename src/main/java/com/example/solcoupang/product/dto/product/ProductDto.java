@@ -2,17 +2,15 @@ package com.example.solcoupang.product.dto.product;
 
 import com.example.solcoupang.product.domain.Product;
 import com.example.solcoupang.product.domain.Seller;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
-@NoArgsConstructor
+
 @Getter
 @Builder
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED) // 생성자를 외부로부터 숨기고
+@NoArgsConstructor(access = AccessLevel.PROTECTED)  // 오직 팩토리 메소드만 사용해서 객체를 만들수 있다.
 public class ProductDto {
     private Long productId;
     private Long sellerId;
@@ -23,8 +21,8 @@ public class ProductDto {
     private String kcCertificationInformation;
     private String manufacturer;
     private String importer;
-
-    public ProductDto fromEntity(Product product){
+    // 객체 생성을 캡슐화하는 정적 팩토리 메서드
+    public static ProductDto fromEntity(Product product){
         return ProductDto.builder()
                 .productId(product.getProductId())
                 .sellerId(product.getSeller().getSellerId())
@@ -37,5 +35,4 @@ public class ProductDto {
                 .importer(product.getImporter())
                 .build();
     }
-
 }
