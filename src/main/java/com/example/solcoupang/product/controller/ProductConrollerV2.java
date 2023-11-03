@@ -10,10 +10,7 @@ import com.example.solcoupang.product.repository.ProductRepository;
 import com.example.solcoupang.product.repository.SellerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -39,7 +36,7 @@ public class ProductConrollerV2 {
     // findBySellerId 쿼리를 날려서 seller 객체를 받아와야하나? yes
 
     @PostMapping("/product")
-    public ProductDto postSeller(@RequestBody ProductRequestDto productRequestDto){
+    public ProductDto postProduct(@RequestBody ProductRequestDto productRequestDto){
         //log.info("입력 dto 정보 : "+productRequestDto.getProductName());
         Seller seller = sellerRepository.findBySellerId(productRequestDto.getSellerId());
         Product product = productRequestDto.toEntity(seller);
@@ -50,4 +47,19 @@ public class ProductConrollerV2 {
         return productDto;
     }
 
+    @GetMapping("/product")
+    public ProductDto getProduct(@RequestParam Long productId, @RequestParam String name){
+        Product product = productRepository.findByProductIdAAndSellerName(productId, name);
+        ProductDto productDto = ProductDto.fromEntity(product);
+        log.info("productId : "+productDto.getProductId()+" sellerId :"+productDto.getSellerId() +" productName : "+productDto.getProductName());
+        return productDto;
+    }
+
+    @GetMapping("/productwith")
+    public ProductDto getProductWithFetch(@RequestParam Long productId){
+        Product product = productRepository.findByProductId(productId);
+        ProductDto productDto = ProductDto.fromEntity(product);
+        log.info("productId : "+productDto.getProductId()+" sellerId :"+productDto.getSellerId() +" sellerName : "+product.getSeller().getSellerName() +" productName : "+productDto.getProductName());
+        return productDto;
+    }
 }
