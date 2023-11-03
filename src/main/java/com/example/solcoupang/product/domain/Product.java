@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -37,6 +38,11 @@ public class Product {
     private String manufacturer;
 
     private String importer;
+
+    // product 저장 때 content도 함께 저장하는 쿼리 생성
+    // mappedBy 속성으로 관계의 소유자 설정
+    @OneToMany(mappedBy = "product",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    List<ProductContent> productContents;
 }
 
 

@@ -1,10 +1,13 @@
 package com.example.solcoupang.product.dto.product;
 
 import com.example.solcoupang.product.domain.Product;
+import com.example.solcoupang.product.domain.ProductContent;
 import com.example.solcoupang.product.domain.Seller;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Getter
@@ -21,6 +24,7 @@ public class ProductDto {
     private String kcCertificationInformation;
     private String manufacturer;
     private String importer;
+    private List<String> productContentDtoList;
     // 객체 생성을 캡슐화하는 정적 팩토리 메서드
     public static ProductDto fromEntity(Product product){
         return ProductDto.builder()
@@ -33,6 +37,8 @@ public class ProductDto {
                 .kcCertificationInformation(product.getKcCertificationInformation())
                 .manufacturer(product.getManufacturer())
                 .importer(product.getImporter())
+                .productContentDtoList(product.getProductContents().stream().map(ProductContent::getContentImgUrl).toList())
                 .build();
+
     }
 }

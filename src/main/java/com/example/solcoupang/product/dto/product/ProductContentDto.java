@@ -20,4 +20,5 @@ public class ProductContentDto {
                 .contentImgUrl(productContent.getContentImgUrl())
                 .build();
     }
+
 }
