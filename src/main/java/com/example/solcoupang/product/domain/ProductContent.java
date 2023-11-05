@@ -16,7 +16,7 @@ public class ProductContent {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long contentId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id") // 외래키 지정
     private Product product;
 

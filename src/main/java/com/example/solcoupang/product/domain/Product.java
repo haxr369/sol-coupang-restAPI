@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -42,7 +43,8 @@ public class Product {
     // product 저장 때 content도 함께 저장하는 쿼리 생성
     // mappedBy 속성으로 관계의 소유자 설정
     // productId를 프라빗키
-    @OneToMany(mappedBy = "product",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @BatchSize(size=10)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL) // EAGER 로 했는데 왜 N+1 문제가 안 생기지?
     List<ProductContent> productContents;
 
     public void setProductContents(List<ProductContent> productContents){

@@ -58,13 +58,13 @@ public class ProductConrollerV2 {
     @GetMapping("/withContents")
     public ProductDto getProductWithContents(@RequestParam Long productId){
         Product product = productRepository.findByProductId(productId);
-        log.info("number of contents : " + product.getProductContents().size());
+        log.info("number of contents id1 : " + product.getProductContents().get(0).getContentId() + " id2 : " + product.getProductContents().get(1).getContentId());
         return ProductDto.fromEntity(product);
     }
 
     @GetMapping("/productWithName")
-    public ProductDto getProductWithName(@RequestParam Long productId, @RequestParam String name) {
-        Product product = productRepository.findByProductIdAAndSellerName(productId, name);
+    public ProductDto getProductWithName( @RequestParam String name) {
+        Product product = productRepository.findBySellerName(name);
         ProductDto productDto = ProductDto.fromEntity(product);
         log.info("productId : " + productDto.getProductId() + " sellerId :" + productDto.getSellerId() + " productName : " + productDto.getProductName());
         return productDto;
