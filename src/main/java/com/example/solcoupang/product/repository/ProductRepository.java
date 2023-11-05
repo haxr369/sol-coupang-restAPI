@@ -13,5 +13,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     // Fetch join 사용
     @Query("SELECT p FROM Product p LEFT JOIN FETCH p.seller WHERE p.productId = :id")
-    Product findByProductId(@Param("id") Long id);
+    Product findByProductIdWithFetch(@Param("id") Long id);
+
+    Product findByProductId(Long id);
+
 }

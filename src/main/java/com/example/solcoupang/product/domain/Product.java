@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Product {
 
-    @Id // productId를 프라빗키
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long productId;
 
@@ -41,8 +41,13 @@ public class Product {
 
     // product 저장 때 content도 함께 저장하는 쿼리 생성
     // mappedBy 속성으로 관계의 소유자 설정
-    @OneToMany(mappedBy = "product",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    // productId를 프라빗키
+    @OneToMany(mappedBy = "product",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     List<ProductContent> productContents;
+
+    public void setProductContents(List<ProductContent> productContents){
+        this.productContents = productContents;
+    }
 }
 
 

@@ -26,6 +26,8 @@ public class ProductDto {
     private String importer;
     private List<String> productContentDtoList;
     // 객체 생성을 캡슐화하는 정적 팩토리 메서드
+
+    // ProductContent는 OneToMany 관계에서 1+N 문제를 발생.
     public static ProductDto fromEntity(Product product){
         return ProductDto.builder()
                 .productId(product.getProductId())
@@ -39,6 +41,5 @@ public class ProductDto {
                 .importer(product.getImporter())
                 .productContentDtoList(product.getProductContents().stream().map(ProductContent::getContentImgUrl).toList())
                 .build();
-
     }
 }

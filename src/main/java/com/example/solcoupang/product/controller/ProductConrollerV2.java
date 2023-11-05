@@ -9,11 +9,14 @@ import com.example.solcoupang.product.dto.product.ProductDto;
 import com.example.solcoupang.product.dto.product.ProductRequestDto;
 import com.example.solcoupang.product.dto.seller.SellerDto;
 import com.example.solcoupang.product.dto.seller.SellerRequestDto;
+import com.example.solcoupang.product.repository.ProductContentRepository;
 import com.example.solcoupang.product.repository.ProductRepository;
 import com.example.solcoupang.product.repository.SellerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -23,6 +26,7 @@ public class ProductConrollerV2 {
 
     private final SellerRepository sellerRepository;
     private final ProductRepository productRepository;
+    private final ProductContentRepository productContentRepository;
 
     @PostMapping("/seller")
     public SellerDto postSeller(@RequestBody SellerRequestDto sellerRequestDto) {
@@ -40,9 +44,10 @@ public class ProductConrollerV2 {
 
     @PostMapping("/product")
     public ProductDto postProduct(@RequestBody ProductRequestDto productRequestDto) {
-        //log.info("입력 dto 정보 : "+productRequestDto.getProductName());
+        log.info("입력 dto 정보 : "+productRequestDto.getProductName()+" 첫 이미지 : "+productRequestDto.getProductContents().get(0));
         Seller seller = sellerRepository.findBySellerId(productRequestDto.getSellerId());
         Product product = productRequestDto.toEntity(seller);
+
         Product savedProduct = productRepository.save(product);
         log.info("엔티티 dto 정보 id : " + savedProduct.getProductId() +" productName : "+savedProduct.getProductName());
         ProductDto productDto = ProductDto.fromEntity(savedProduct);
@@ -50,20 +55,37 @@ public class ProductConrollerV2 {
         return productDto;
     }
 
-    @GetMapping("/product")
-    public ProductDto getProduct(@RequestParam Long productId, @RequestParam String name) {
+    @GetMapping("/withContents")
+    public ProductDto getProductWithContents(@RequestParam Long productId){
+        Product product = productRepository.findByProductId(productId);
+        log.info("number of contents : " + product.getProductContents().size());
+        return ProductDto.fromEntity(product);
+    }
+
+    @GetMapping("/productWithName")
+    public ProductDto getProductWithName(@RequestParam Long productId, @RequestParam String name) {
         Product product = productRepository.findByProductIdAAndSellerName(productId, name);
         ProductDto productDto = ProductDto.fromEntity(product);
         log.info("productId : " + productDto.getProductId() + " sellerId :" + productDto.getSellerId() + " productName : " + productDto.getProductName());
         return productDto;
     }
 
-    @GetMapping("/productwith")
+    @GetMapping("/productFetch")
     public ProductDto getProductWithFetch(@RequestParam Long productId) {
-        Product product = productRepository.findByProductId(productId);
+        Product product = productRepository.findByProductIdWithFetch(productId);
         ProductDto productDto = ProductDto.fromEntity(product);
         log.info("productId : " + productDto.getProductId() + " sellerId :" + productDto.getSellerId() + " sellerName : " + product.getSeller().getSellerName() + " productName : " + productDto.getProductName());
+        log.info("img url : "+product.getProductContents().get(0));
         return productDto;
+    }
+
+    @PostMapping("/product/content")
+    public ProductDto postContent(@RequestBody ProductContentRequestDto productContentRequestDto) {
+        Product product = productRepository.findByProductId(productContentRequestDto.getProductId());
+        log.info("productContents n : " + product.getProductContents().size());
+        List<ProductContent> productContentList = productContentRequestDto.toEntities(product);
+        productContentRepository.saveAll(productContentList);
+        return ProductDto.fromEntity(product);
     }
 
 }
