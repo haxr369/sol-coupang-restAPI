@@ -14,6 +14,9 @@ import com.example.solcoupang.product.repository.ProductRepository;
 import com.example.solcoupang.product.repository.SellerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -74,6 +77,7 @@ public class ProductConrollerV2 {
         return ProductDto.fromEntity(product);
     }
 
+
     @GetMapping("/productWithName")
     public ProductDto getProductWithName( @RequestParam String name) {
         Product product = productRepository.findBySellerName(name);
@@ -91,15 +95,51 @@ public class ProductConrollerV2 {
         return productDto;
     }
 
-    @GetMapping("/all")
-    public List<ProductDto> getProductAll(){
-        List<Product> products = productRepository.findAllProduct();
-        List<ProductDto> productDtos = products.stream().map(
-                // product -> Product.fromEntity 람다를 참조로 바꿈
-                                            ProductDto::fromEntity
-                                            ).toList();
-        return productDtos;
+    @GetMapping("/productById")
+    public ProductDto getProduct(@RequestParam Long productId) {
+        Product product = productRepository.findByProductId(productId);
+        ProductDto productDto = ProductDto.fromEntity(product);
+        log.info("productId : " + productDto.getProductId() + " sellerId :" + productDto.getSellerId() + " sellerName : " + product.getSeller().getSellerName() + " productName : " + productDto.getProductName());
+        log.info("img url : "+product.getProductContents().get(0));
+        return productDto;
     }
+
+    @GetMapping("/dslByIdWoFetch")
+    public ProductDto getProductDSLWoFetch(@RequestParam Long productId) {
+        Product product = productRepository.findByProductIdFetchImpl(productId).get(0);
+        log.info("엔티티 dto 정보 id : " + product.getProductId() +" productName : "+product.getProductName());
+        ProductDto productDto = ProductDto.fromEntity(product);
+        log.info("productId : " + productDto.getProductId() + " sellerId :" + productDto.getSellerId() + " sellerName : " + product.getSeller().getSellerName() + " productName : " + productDto.getProductName());
+        log.info("img url : "+product.getProductContents().get(0));
+        return productDto;
+    }
+
+    @GetMapping("/dslByIdWFetch")
+    public ProductDto getProductDSLWFetch(@RequestParam Long productId) {
+        Product product = productRepository.findByProductIdWoFetchImpl(productId).get(0);
+        ProductDto productDto = ProductDto.fromEntity(product);
+        log.info("productId : " + productDto.getProductId() + " sellerId :" + productDto.getSellerId() + " sellerName : " + product.getSeller().getSellerName() + " productName : " + productDto.getProductName());
+        log.info("img url : "+product.getProductContents().get(0));
+        return productDto;
+    }
+
+    @GetMapping("/all")
+    public void getProductAll() {
+        PageRequest pageRequest = PageRequest.of(0, 1);
+        Page<Product> products = productRepository.findAll(pageRequest);
+
+        for (Product product : products.getContent()) {
+            log.info("Product ID: " + product.getProductId());
+            log.info("Product Name: " + product.getProductName());
+            log.info("Seller Name: " + product.getSeller().getSellerName());
+
+            for (ProductContent productContent : product.getProductContents()) {
+                log.info("Content URL: " + productContent.getContentImgUrl());
+            }
+        }
+    }
+
+
 
 
 }

@@ -38,7 +38,8 @@ public class Product {
     // mappedBy 속성으로 관계의 소유자 설정
     // productId를 프라빗키
 //    @BatchSize(size=10)
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+    // Hibernate 쿼리는 content를 5개씩 가져올 것.
     private List<ProductContent> productContents = new ArrayList<>();
 
     // 연관관계 메서드 OneToMany에서는 One Entity에서 작성
