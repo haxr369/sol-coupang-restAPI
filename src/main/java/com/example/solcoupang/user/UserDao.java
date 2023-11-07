@@ -52,7 +52,7 @@ public class UserDao {
     }
 
     public Integer checkEmail(String email) {
-        log.info(email+"아니왜 안보니얃로ㅕㅏㅗㄷ재롣쟈ㅐㅕ롣ㅈㄹㅈㄷ뢔도");
+//        log.info(email+"아니왜 안보니얃로ㅕㅏㅗㄷ재롣쟈ㅐㅕ롣ㅈㄹㅈㄷ뢔도");
         String checkEmailQuery = "select exists(select email from USER where email = ?)";
         try{
             return this.jdbcTemplate.queryForObject(checkEmailQuery, itemRowMapper(), email);
