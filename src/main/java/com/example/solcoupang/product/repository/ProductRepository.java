@@ -15,13 +15,11 @@ import java.util.List;
 
 
 interface ProductRepositoryCustom {
-    List<Product> findByContentNumb(Long numb);
     List<Product> findByProductIdFetchImpl(Long id);
     List<Product> findByProductIdWoFetchImpl(Long id);
 
     List<Product> findByProductName(String name);
 
-    List<Product> findBetweenWeight(Long min, Long max);
 }
 
 @RequiredArgsConstructor
@@ -36,22 +34,7 @@ class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
         return name != null ? product.productName.eq(name) : null;
     }
 
-    @Override
-    public List<Product> findByContentNumb(Long numb) {
 
-//        List<ProductContent> productContents = jpaQueryFactory.selectFrom(c)
-//                .join(c.product, p)
-//                .where(p.productName.contains("맥북"))
-//                .fetch();
-
-//        long count = jpaQueryFactory.select(QProductContent.productContent)
-//                .from(QProductContent.productContent)
-
-//        return jpaQueryFactory.select(QProduct.product)
-//                .from(QProduct.product)
-//                .where()
-        return null;
-    }
 
     @Override
     public List<Product> findByProductIdFetchImpl(Long id) {
@@ -80,13 +63,7 @@ class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
                 .fetch();
     }
 
-    @Override
-    public List<Product> findBetweenWeight(Long min, Long max) {
 
-        return jpaQueryFactory.selectFrom(product)
-                .where(product.weight.between(min, max))
-                .fetch();
-    }
 }
 
 
