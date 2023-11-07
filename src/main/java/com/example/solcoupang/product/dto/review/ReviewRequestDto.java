@@ -4,10 +4,6 @@ import com.example.solcoupang.product.domain.Product;
 import com.example.solcoupang.product.domain.ProductOption;
 import com.example.solcoupang.product.domain.Review;
 import com.example.solcoupang.product.domain.User;
-import jakarta.persistence.Column;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.*;
 
 @Getter
@@ -20,6 +16,7 @@ public class ReviewRequestDto {
     private String reviewImgUrl;
     private String summary;
 
+    // 연관관계 메서드 ManyToOne은 의존하는 Entity를 주입 받아서 사용.
     public Review toEntity(User user, ProductOption productOption){
         return Review.builder()
                 .user(user)

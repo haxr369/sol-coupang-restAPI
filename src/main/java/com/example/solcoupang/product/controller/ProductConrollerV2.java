@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
@@ -46,8 +47,8 @@ public class ProductConrollerV2 {
     public ProductDto postProduct(@RequestBody ProductRequestDto productRequestDto) {
         log.info("입력 dto 정보 : "+productRequestDto.getProductName()+" 첫 이미지 : "+productRequestDto.getProductContents().get(0));
         Seller seller = sellerRepository.findBySellerId(productRequestDto.getSellerId());
-        Product product = productRequestDto.toEntity(seller);
-
+        Product product = productRequestDto.toEntity(seller); // 기본 상품 정보 저장
+        product.addProductContent(productRequestDto.getProductContents());
         Product savedProduct = productRepository.save(product);
         log.info("엔티티 dto 정보 id : " + savedProduct.getProductId() +" productName : "+savedProduct.getProductName());
         ProductDto productDto = ProductDto.fromEntity(savedProduct);
@@ -55,10 +56,21 @@ public class ProductConrollerV2 {
         return productDto;
     }
 
+    @PostMapping("/product/content")
+    public ProductDto postContent(@RequestBody ProductContentRequestDto productContentRequestDto) {
+        Product product = productRepository.findByProductId(productContentRequestDto.getProductId());
+        log.info("productContents n : " + product.getProductContents().size());
+        List<ProductContent> productContentList = productContentRequestDto.toEntities(product);
+        productContentRepository.saveAll(productContentList);
+        return ProductDto.fromEntity(product);
+    }
+
+
     @GetMapping("/withContents")
     public ProductDto getProductWithContents(@RequestParam Long productId){
-        Product product = productRepository.findByProductId(productId);
+        Product product = productRepository.findByProductIdWOFetch(productId);
         log.info("number of contents id1 : " + product.getProductContents().get(0).getContentId() + " id2 : " + product.getProductContents().get(1).getContentId());
+        log.info("seller name : " + product.getSeller().getSellerName());
         return ProductDto.fromEntity(product);
     }
 
@@ -79,13 +91,15 @@ public class ProductConrollerV2 {
         return productDto;
     }
 
-    @PostMapping("/product/content")
-    public ProductDto postContent(@RequestBody ProductContentRequestDto productContentRequestDto) {
-        Product product = productRepository.findByProductId(productContentRequestDto.getProductId());
-        log.info("productContents n : " + product.getProductContents().size());
-        List<ProductContent> productContentList = productContentRequestDto.toEntities(product);
-        productContentRepository.saveAll(productContentList);
-        return ProductDto.fromEntity(product);
+    @GetMapping("/all")
+    public List<ProductDto> getProductAll(){
+        List<Product> products = productRepository.findAllProduct();
+        List<ProductDto> productDtos = products.stream().map(
+                // product -> Product.fromEntity 람다를 참조로 바꿈
+                                            ProductDto::fromEntity
+                                            ).toList();
+        return productDtos;
     }
+
 
 }

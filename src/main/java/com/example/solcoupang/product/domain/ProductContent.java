@@ -16,10 +16,12 @@ public class ProductContent {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long contentId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    // LAZY, EAGER 로 했는데 왜 N+1 문제가 안 생기지?
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id") // 외래키 지정
     private Product product;
 
     @Column
     private String contentImgUrl;
+
 }

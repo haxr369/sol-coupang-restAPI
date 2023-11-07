@@ -21,8 +21,8 @@ services:
   mysqldb :
     container_name: mysqldb
     image: mysql:8.1.0
-#    volumes:
-#      - ./db2:/var/lib/mysql
+    volumes:
+      - ./db3:/var/lib/mysql
     ports:
       - 3306:3306
     environment:

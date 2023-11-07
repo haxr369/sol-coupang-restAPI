@@ -35,7 +35,19 @@ public class ProductRequestDto {
 
     public Product toEntity(Seller seller){
         // 1대 N을 위해 굳이 product를 만들다만다.
-        Product product = Product.builder()
+        //        // ProductContent의 외래키를 위해 만들다만 product를 리스트로 만들어서 넣어준다.
+//        List<ProductContent> productContentList = productContents.stream()
+//                .map(content ->
+//                        ProductContent
+//                                .builder()
+//                                .product(product)
+//                                .contentImgUrl(content)
+//                                .build())
+//                .collect(Collectors.toList());
+//
+//        // 1대N 관계에서 엔티티를 만들기 위해 결국 set 함수를 사용하게 된다.
+//        product.setProductContents(productContentList);
+        return Product.builder()
                 .seller(seller)
                 .registrationDate(registrationDate)
                 .productName(productName)
@@ -44,20 +56,8 @@ public class ProductRequestDto {
                 .kcCertificationInformation(kcCertificationInformation)
                 .manufacturer(manufacturer)
                 .importer(importer)
+                .productContents(new ArrayList<>())
                 .build();
-        // ProductContent의 외래키를 위해 만들다만 product를 리스트로 만들어서 넣어준다.
-        List<ProductContent> productContentList = productContents.stream()
-                .map(content ->
-                        ProductContent
-                                .builder()
-                                .product(product)
-                                .contentImgUrl(content)
-                                .build())
-                .collect(Collectors.toList());
-
-        // 1대N 관계에서 엔티티를 만들기 위해 결국 set 함수를 사용하게 된다.
-        product.setProductContents(productContentList);
-        return product;
     }
 
 
