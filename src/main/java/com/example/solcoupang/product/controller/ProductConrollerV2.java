@@ -123,6 +123,15 @@ public class ProductConrollerV2 {
         return productDto;
     }
 
+    @GetMapping("/dslByName")
+    public ProductDto getProductByName(@RequestParam String name){
+        Product product = productRepository.findByProductName(name).get(0);
+        log.info("엔티티 dto 정보 id : " + product.getProductId() +" productName : "+product.getProductName());
+        ProductDto productDto = ProductDto.fromEntity(product);
+        log.info("productId : " + productDto.getProductId() + " sellerId :" + productDto.getSellerId() + " sellerName : " + product.getSeller().getSellerName() + " productName : " + productDto.getProductName());
+        return productDto;
+    }
+
     @GetMapping("/all")
     public void getProductAll() {
         PageRequest pageRequest = PageRequest.of(0, 1);
