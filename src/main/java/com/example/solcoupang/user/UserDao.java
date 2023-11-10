@@ -1,10 +1,8 @@
 package com.example.solcoupang.user;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
-import com.example.solcoupang.common.BaseException;
+import com.example.solcoupang.common.exceptions.BaseException;
 import com.example.solcoupang.common.BaseResponseStatus;
 import com.example.solcoupang.user.model.GetUserRes;
 import com.example.solcoupang.user.model.PatchUserReq;

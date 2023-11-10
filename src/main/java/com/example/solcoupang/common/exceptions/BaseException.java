@@ -1,8 +1,11 @@
-package com.example.solcoupang.common;
+package com.example.solcoupang.common.exceptions;
+
+import com.example.solcoupang.common.BaseResponseStatus;
 
 public class BaseException  extends RuntimeException{
 
     private BaseResponseStatus status;
+
 
     public BaseException(BaseResponseStatus status) {
         super(status.getMessage());

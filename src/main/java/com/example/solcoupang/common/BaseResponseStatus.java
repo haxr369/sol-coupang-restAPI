@@ -9,6 +9,8 @@ public enum BaseResponseStatus {
     // httpstatus는 code 대신 HttpsStatus 열거형 쓰는게 더 표준적
 
     SUCCESS(true, HttpStatus.OK, "요청에 성공하였습니다."),
+    NO_CONTENT(true, HttpStatus.NO_CONTENT, "요청에 성공했지만, 컨텐츠는 없습니다."),
+    POST_INVAILD_ARGUMENT(false, HttpStatus.BAD_REQUEST, "올바른 입력 형식이 아닙니다."),
     POST_USERS_EMPTY_EMAIL(false, HttpStatus.BAD_REQUEST, "이메일을 입력해주세요."),
     POST_USERS_INVALID_EMAIL(false, HttpStatus.BAD_REQUEST, "이메일 형식을 확인해주세요."),
     POST_USERS_EXISTS_EMAIL(false, HttpStatus.BAD_REQUEST, "중복된 이메일입니다."),
