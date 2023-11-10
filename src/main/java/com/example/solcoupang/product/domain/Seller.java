@@ -13,13 +13,10 @@ public class Seller {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long sellerId;
-
     @Column
     private String sellerName;
-
     @Column
     private String sellerPhoneNumber;
-
     @Column
     private String sellerAddress;
 

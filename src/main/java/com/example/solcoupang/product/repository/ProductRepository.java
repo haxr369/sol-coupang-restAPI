@@ -1,6 +1,7 @@
 package com.example.solcoupang.product.repository;
 
 import com.example.solcoupang.product.domain.*;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -40,9 +41,22 @@ class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
     public List<Product> findByProductIdFetchImpl(Long id) {
 
         return jpaQueryFactory.selectFrom(product)
-                .join(product.productContents)
-                .join(product.seller).fetchJoin()
+                .join(product.productContents).fetchJoin() // OneToMany
+                .join(product.seller).fetchJoin() // ManyToOne
                 .where(productIdEq(id))
+                .fetch();
+    }
+
+
+    public List<Product> findByProductIdBuild(Long id) {
+        BooleanBuilder builder = new BooleanBuilder();
+        if(id != null){
+            builder.and(product.productId.eq(id));
+        }
+        return jpaQueryFactory.selectFrom(product)
+                .join(product.productContents).fetchJoin() // OneToMany
+                .join(product.seller).fetchJoin() // ManyToOne
+                .where(builder)
                 .fetch();
     }
 

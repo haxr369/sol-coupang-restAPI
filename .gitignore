@@ -37,3 +37,5 @@ out/
 .vscode/
 
 db/**
+db2/**
+db3/**
