@@ -1,6 +1,6 @@
 package com.example.solcoupang.product.service;
 
-import com.example.solcoupang.common.BaseException;
+import com.example.solcoupang.common.exceptions.BaseException;
 import com.example.solcoupang.common.BaseResponseStatus;
 import com.example.solcoupang.product.model.Delete.DeleteRes;
 import com.example.solcoupang.product.model.Read.GetProductDetailRes;

@@ -12,6 +12,7 @@ import com.example.solcoupang.product.dto.seller.SellerRequestDto;
 import com.example.solcoupang.product.repository.ProductContentRepository;
 import com.example.solcoupang.product.repository.ProductRepository;
 import com.example.solcoupang.product.repository.SellerRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -47,7 +48,7 @@ public class ProductConrollerV2 {
     // findBySellerId 쿼리를 날려서 seller 객체를 받아와야하나? yes
 
     @PostMapping("/product")
-    public ProductDto postProduct(@RequestBody ProductRequestDto productRequestDto) {
+    public ProductDto postProduct(@Valid @RequestBody ProductRequestDto productRequestDto) {
         log.info("입력 dto 정보 : "+productRequestDto.getProductName()+" 첫 이미지 : "+productRequestDto.getProductContents().get(0));
         Seller seller = sellerRepository.findBySellerId(productRequestDto.getSellerId());
         Product product = productRequestDto.toEntity(seller); // 기본 상품 정보 저장
