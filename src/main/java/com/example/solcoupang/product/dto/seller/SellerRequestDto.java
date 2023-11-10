@@ -13,11 +13,9 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @AllArgsConstructor
 public class SellerRequestDto {
-
     private String sellerName;
     private String sellerPhoneNumber;
     private String sellerAddress;
-
     public Seller toEntity(){
         return Seller.builder()
                 .sellerName(sellerName)

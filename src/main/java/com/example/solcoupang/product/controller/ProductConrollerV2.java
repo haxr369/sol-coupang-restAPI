@@ -134,7 +134,7 @@ public class ProductConrollerV2 {
 
     @GetMapping("/all")
     public void getProductAll() {
-        PageRequest pageRequest = PageRequest.of(0, 1);
+        PageRequest pageRequest = PageRequest.of(0, 10);
         Page<Product> products = productRepository.findAll(pageRequest);
 
         for (Product product : products.getContent()) {
