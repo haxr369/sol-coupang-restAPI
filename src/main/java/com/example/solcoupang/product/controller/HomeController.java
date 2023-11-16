@@ -9,7 +9,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home() {
-        return "home"; // home.html 이 노출
+        return "home.html"; // home.html 이 노출
     }
 
 }
