@@ -1,13 +1,14 @@
 #!/bin/bash
 
-# Spring Boot 애플리케이션의 프로세스 ID를 찾기
-PID=$(ps -ef | grep "java -Dserver.port=80 -jar app.jar" | grep -v grep | awk '{print $2}')
+PORT=80
 
-# 프로세스가 실행 중인지 확인
+# 80 포트를 사용 중인 프로세스의 PID 찾기
+PID=$(lsof -t -i:$PORT)
+
 if [ -z "$PID" ]; then
-  echo "Spring Boot 애플리케이션은 실행 중이지 않습니다."
+  echo "포트 $PORT를 사용 중인 프로세스가 없습니다."
 else
-  # 프로세스를 종료
-  echo "Spring Boot 애플리케이션을 종료합니다. (PID: $PID)"
+  # 프로세스 종료
+  echo "포트 $PORT를 사용 중인 프로세스를 종료합니다. (PID: $PID)"
   kill -9 "$PID"
 fi
