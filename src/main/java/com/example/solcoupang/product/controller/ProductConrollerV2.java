@@ -47,18 +47,7 @@ public class ProductConrollerV2 {
     // Product를 만들기 위해선 seller 객체가 필요한데
     // findBySellerId 쿼리를 날려서 seller 객체를 받아와야하나? yes
 
-    @PostMapping("/product")
-    public ProductDto postProduct(@Valid @RequestBody ProductRequestDto productRequestDto) {
-        log.info("입력 dto 정보 : "+productRequestDto.getProductName()+" 첫 이미지 : "+productRequestDto.getProductContents().get(0));
-        Seller seller = sellerRepository.findBySellerId(productRequestDto.getSellerId());
-        Product product = productRequestDto.toEntity(seller); // 기본 상품 정보 저장
-        product.addProductContent(productRequestDto.getProductContents());
-        Product savedProduct = productRepository.save(product);
-        log.info("엔티티 dto 정보 id : " + savedProduct.getProductId() +" productName : "+savedProduct.getProductName());
-        ProductDto productDto = ProductDto.fromEntity(savedProduct);
-        log.info("출력 dto 정보 id : "+productDto.getSellerId() + " sellerId : "+productDto.getSellerId() + " productName : "+productDto.getProductName());
-        return productDto;
-    }
+
 
     @PostMapping("/product/content")
     public ProductDto postContent(@RequestBody ProductContentRequestDto productContentRequestDto) {

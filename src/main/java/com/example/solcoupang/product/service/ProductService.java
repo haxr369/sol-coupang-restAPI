@@ -2,6 +2,8 @@ package com.example.solcoupang.product.service;
 
 import com.example.solcoupang.common.exceptions.BaseException;
 import com.example.solcoupang.common.BaseResponseStatus;
+import com.example.solcoupang.product.domain.Product;
+import com.example.solcoupang.product.dto.product.ProductDto;
 import com.example.solcoupang.product.model.Delete.DeleteRes;
 import com.example.solcoupang.product.model.Read.GetProductDetailRes;
 import com.example.solcoupang.product.model.create.PostProductReq;
@@ -9,6 +11,7 @@ import com.example.solcoupang.product.model.create.PostProductRes;
 import com.example.solcoupang.product.model.patch.PatchProductReq;
 import com.example.solcoupang.product.model.patch.PatchProductRes;
 import com.example.solcoupang.product.repository.ProductDao;
+import com.example.solcoupang.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductDao productDao;
+    private final ProductRepository productRepository;
+
 
 
     public GetProductDetailRes getPoductDetail(Long productId) throws BaseException {
