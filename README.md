@@ -12,7 +12,7 @@
 
 
 ### 노션 주소
-https://www.notion.so/API-c03c537a2c684f6386ec2086e6e4e2cd?pvs=4
+https://periodic-fisher-f68.notion.site/ASAC-API-51145ff1b5c642fd96aa05df5c61e20c?pvs=4
 
 ### 상품 입력
 
