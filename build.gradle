@@ -28,10 +28,11 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
+//	implementation 'org.springframework.boot:spring-boot-starter-security'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
+	// JUnitTest
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	//Querydsl 추가
@@ -47,9 +48,12 @@ dependencies {
 
 	// security
 	// 스프링 시큐리티 버전
-	implementation("org.springframework.boot:spring-boot-starter-security:3.1.3")
-	implementation("org.springframework.security:spring-security-test:6.1.3")
-	implementation("org.springframework.boot:spring-boot-starter-oauth2-client:3.1.3")
+//	implementation("org.springframework.boot:spring-boot-starter-security:3.1.3")
+//	implementation("org.springframework.security:spring-security-test:6.1.3")
+//	implementation("org.springframework.boot:spring-boot-starter-oauth2-client:3.1.3")
+
+	// thymeleaf
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 }
 clean {
 	delete file('src/main/generated')
