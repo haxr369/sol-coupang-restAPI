@@ -27,6 +27,7 @@ public class User {
     @Column(name="user_address")
     private String userAddress;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user_id")
+    // mappedBy는 연관관계 주인 엔티티의 필드를 작성
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Alarm> alarms;
 }
