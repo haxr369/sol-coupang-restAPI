@@ -20,8 +20,6 @@ public class ProductContent {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id") // 외래키 지정
     private Product product;
-
     @Column
     private String contentImgUrl;
-
 }

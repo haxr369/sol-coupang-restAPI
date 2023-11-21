@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class Alarm {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int alarmId;
+    private Long alarmId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
