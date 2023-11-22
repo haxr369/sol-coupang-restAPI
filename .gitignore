@@ -36,6 +36,7 @@ out/
 ### VS Code ###
 .vscode/
 
-db/**
-dbms/**
-dbms3/**
+/db/**
+/dbms/**
+/dbms3/**
+/db3

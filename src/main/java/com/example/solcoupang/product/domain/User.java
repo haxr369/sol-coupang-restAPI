@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -16,12 +18,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @Column
+    @Column(name = "user_name")
     private String userName;
 
-    @Column
+    @Column(name = "user_phone_number")
     private String userPhoneNumber;
 
-    @Column
+    @Column(name="user_address")
     private String userAddress;
+
+    // mappedBy는 연관관계 주인 엔티티의 필드를 작성
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Alarm> alarms;
 }
